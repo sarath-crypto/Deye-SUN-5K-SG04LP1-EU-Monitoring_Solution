@@ -2,6 +2,7 @@
 This is Raspberry Pi3 based Deye Inverter monitoring solution. It has Web cam, thermal vision and many other sensors.
 
 Commands for setting up the solutions.
+
 sudo apt install libopencv-dev mariadb-server php cmake libmysqlcppconn-dev  libasound2-dev acl  libboost-dev syslog-ng  libcamera-dev apache2
 sudo apt install php8.2-mysql php8.2-gd
 git clone https://github.com/WiringPi/WiringPi.git
@@ -22,7 +23,7 @@ create user 'userpwrsys'@'localhost' identified by 'pwrsys123';
 grant all on pwrsys.* TO 'userpwrsys'@'localhost';
 
 create table cfg(dir_max MEDIUMINT NULL,access CHAR(255) NOT NULL,ip CHAR(32) NOT NULL,sn CHAR(32) NOT NULL,rb TINYINT NULL,wled TINYINT NULL);
-insert into cfg (dir_max,access,ip,sn,rb,wled) values(2,"admin","192.168.1.4","3141237744",0,0);
+insert into cfg (dir_max,access,ip,sn,rb,wled) values(2,"password","192.168.1.100","3144567744",0,0);
 create table hour(temp_a TINYINT NULL,temp_b TINYINT NULL,press SMALLINT NULL, alt SMALLINT NULL, aqi TINYINT NULL,bat TINYINT NULL,rdr TINYINT NULL,therm SMALLINT NULL, dprod SMALLINT NULL,l1 SMALLINT NULL,l2 SMALLINT NULL,soc TINYINT NULL,pv1 SMALLINT NULL,pv2 SMALLINT NULL,grid TINYINT NULL,ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
 
 Tutorials for Deye Hybrid inverter
