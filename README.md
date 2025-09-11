@@ -20,6 +20,8 @@ create table out_img(data BLOB,ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP O
 insert into out_img(data) values(LOAD_FILE('/home/seccam/backup/dbase/tv640.jpg'));
 create table out_tim(data BLOB);
 insert into out_tim(data) values(LOAD_FILE('/home/seccam/backup/dbase/tv640.jpg'));
+create table out_tig(data BLOB);
+insert into out_tig(data) values(LOAD_FILE('/home/seccam/backup/dbase/tv640.jpg'));
 
 create user 'userpwrsys'@'localhost' identified by 'pwrsys123';
 grant all on pwrsys.* TO 'userpwrsys'@'localhost';
