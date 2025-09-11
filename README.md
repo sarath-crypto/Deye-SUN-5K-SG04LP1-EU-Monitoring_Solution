@@ -26,6 +26,21 @@ create table cfg(dir_max MEDIUMINT NULL,access CHAR(255) NOT NULL,ip CHAR(32) NO
 insert into cfg (dir_max,access,ip,sn,rb,wled) values(2,"password","192.168.1.100","3144567744",0,0);
 create table hour(temp_a TINYINT NULL,temp_b TINYINT NULL,press SMALLINT NULL, alt SMALLINT NULL, aqi TINYINT NULL,bat TINYINT NULL,rdr TINYINT NULL,therm SMALLINT NULL, dprod SMALLINT NULL,l1 SMALLINT NULL,l2 SMALLINT NULL,soc TINYINT NULL,pv1 SMALLINT NULL,pv2 SMALLINT NULL,grid TINYINT NULL,ts TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
 
+Add below lines to .bashrc and enable autologin in pi3
+
+app="ACTIVE"
+#app=""
+if [ -n "$app" ]; then
+        rm /home/solar/app/access.txt -f
+        cmd=$(pgrep pwrsysapp)
+        if [ -z "$cmd" ]; then
+                /home/solar/app/keep_alive.sh &
+        fi
+fi
+
+alias ll="ls -al"
+
+
 Tutorials for Deye Hybrid inverter
 https://www.youtube.com/watch?v=NoryPpAXwr8
 https://www.youtube.com/watch?v=l7fjZCPHtFo
