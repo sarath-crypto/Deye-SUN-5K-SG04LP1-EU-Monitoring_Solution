@@ -8,7 +8,7 @@ sudo apt install php8.2-mysql php8.2-gd
 git clone https://github.com/WiringPi/WiringPi.git
 git pull origin
 
-git clone https://github.com/sanjuruk/ADS1X15_TLA2024_Linux/tree/master
+git clone https://github.com/sanjuruk/ADS1X15_TLA2024_Linux
 
 sudo chown  www-data:www-data -R *
 sudo setfacl -m u:solar:rwx data
