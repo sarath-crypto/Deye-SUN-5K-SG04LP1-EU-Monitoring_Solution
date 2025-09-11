@@ -23,6 +23,7 @@ create table out_tim(data BLOB);
 insert into out_tim(data) values(LOAD_FILE('/home/seccam/backup/dbase/tv640.jpg'));
 create table out_tig(data BLOB);
 insert into out_tig(data) values(LOAD_FILE('/home/seccam/backup/dbase/tv640.jpg'));
+create table mask(id int NOT NULL AUTO_INCREMENT,x CHAR(255) NOT NULL,y CHAR(255) NOT NULL,w CHAR(255) NOT NULL,h CHAR(255) NOT NULL,PRIMARY KEY (id));
 
 create user 'userpwrsys'@'localhost' identified by 'pwrsys123';
 grant all on pwrsys.* TO 'userpwrsys'@'localhost';
