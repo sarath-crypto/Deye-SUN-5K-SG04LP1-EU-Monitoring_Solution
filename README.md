@@ -4,7 +4,8 @@ This is Raspberry Pi3 based Deye Inverter monitoring solution. It has Web cam, t
 Commands for setting up the solutions.
 
 sudo apt install libopencv-dev mariadb-server php cmake libmysqlcppconn-dev  libasound2-dev acl  libboost-dev syslog-ng  libcamera-dev apache2
-sudo apt install php8.2-mysql php8.2-gd
+sudo apt install php8.2-mysql php8.2-gd i2c-tools
+
 git clone https://github.com/WiringPi/WiringPi.git
 git pull origin
 
