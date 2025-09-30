@@ -1,4 +1,5 @@
 # Deye-SUN-5K-SG04LP1-EU-Monitoring_Solution
+Battery is Deye make model SE-G5.3
 This is Raspberry Pi3 based Deye Inverter monitoring solution. It has Web cam, thermal vision and many other sensors.
 
 Commands for setting up the solutions.
