@@ -1,0 +1,1 @@
+g++ pwrsysapp.cpp udps.o tcpc.o bmp180.o amg8833.o motiondetector.o scanner.o syscam.o global.o `pkg-config --cflags --libs opencv4` -l:libads1x15_tla2024.a  -lmysqlcppconn -Wno-psabi  -llccv -ldl -lm -lpthread -Wall -g -lwiringPi -o pwrsysapp
