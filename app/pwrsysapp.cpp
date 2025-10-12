@@ -689,7 +689,6 @@ void *netproc(void *p){
 #ifdef 	DEBUG_2	
 				printf("MOTOR UDP :%s\n",word[1].c_str());
 #endif
-				if(word[1].compare("OFF"))mrun = false;
 			}
 #ifdef 	DEBUG_2	
 			printf("Water level:%.02f %d\n",wfl,rd.wl);
