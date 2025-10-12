@@ -90,14 +90,12 @@
 #define GPWR_TH		5000
 #define ULOAD_TH	5000
 #define DQ_TO           900
+
 #define NW_TO		4
 #define FAULT_TH	16
 #define DBMAX_SZ	96
-#define POLL_TO		10
-#define MOT_TO		10
-
-#define WL_LO_TH	100 
-#define WL_HI_TH	200
+#define POLL_TO		5
+#define MOT_TO		5
 
 /*
 #define DEBUG_1		1
@@ -244,6 +242,8 @@ void access_dbase(string &cmd,ipc *ip,unsigned char type){
 	else if(!cmd.compare("rb"))cmd = "select rb from cfg";
 	else if(!cmd.compare("access"))cmd = "select access from cfg";
 	else if(!cmd.compare("wled"))cmd = "select wled from cfg";
+	else if(!cmd.compare("wlo"))cmd = "select wlo from cfg";
+	else if(!cmd.compare("whi"))cmd = "select whi from cfg";
 	else if(!cmd.compare("sip")){
 		cmd = "select sip from cfg";
 		token = "sip";
@@ -408,9 +408,9 @@ void *dbproc(void *p){
 				file_write((char *)f.img_data,f.img_len,IMG);
 			}
 		}
-		if((ip->dq.size()) && ((time(NULL)-ts) >= DQ_TO)){
+		if(((time(NULL)-ts) >= DQ_TO) && (ip->dq.size())){
 #ifdef	DEBUG_3
-			cout << "DQ SIZE " << ip->dq.size() << endl;
+			cout << "DQ SIZE ~~~~~~~~~~~~~~~~~~~" << ip->dq.size() << endl;
 #endif
 			rtd rd;
 			unsigned long tempa = 0;	
@@ -507,7 +507,7 @@ void *dbproc(void *p){
 			cout <<cmd << endl;
 #endif
 			access_dbase(cmd,ip,DBNONE);
-		
+
 			therm = 0;
 			tc = 0;
 			ts = time(NULL);
@@ -540,6 +540,14 @@ void *netproc(void *p){
 	cmd = "phr"; 
 	access_dbase(cmd,ip,DBINT);
 	unsigned char phr = stoi(cmd);
+
+	cmd = "wlo"; 
+	access_dbase(cmd,ip,DBINT);
+	unsigned short wlo = stoi(cmd);
+
+	cmd = "whi"; 
+	access_dbase(cmd,ip,DBINT);
+	unsigned short whi = stoi(cmd);
 	
 	cmd = "pkey"; 
         access_dbase(cmd,ip,DBSTRING);
@@ -647,7 +655,7 @@ void *netproc(void *p){
 	sp.clear();
 	while(getline(ss,sp,' '))h.push_back(stoi(sp));
 
-	float wfl = WL_HI_TH+1;
+	float wfl = whi++;
 	bool mrun = false;
 	pdu rtu;
 	rtd rd;
@@ -701,8 +709,8 @@ void *netproc(void *p){
 			strftime(ts,24,"%H",ptm);
 			unsigned char chr = atoi(ts);
 			if(phr == chr){
-				if(wfl <= WL_LO_TH)mrun = true;
-				if(wfl >= WL_HI_TH)mrun = false;
+				if(wfl <= wlo)mrun = true;
+				if(wfl >= whi)mrun = false;
 			}
 			if(mrun)m_msg += "ON";
 			else m_msg += "OFF";
@@ -716,8 +724,8 @@ void *netproc(void *p){
 
 			pu->send();
 #ifdef DEBUG_2
-			printf("%f Send UDP----->%s %d %d %d\n",wfl,m_msg.c_str(),(int)chr,(int)phr,mrun);
-			printf("%f Send UDP----->%s %d %d %d\n",wfl,p_msg.c_str(),(int)chr,(int)phr,mrun);
+			printf("MOTOR Send UDP----->%s %d %d %d\n",m_msg.c_str(),(int)chr,(int)phr,mrun);
+			printf("PUMP  Send UDP----->%s %d %d %d\n",p_msg.c_str(),(int)chr,(int)phr,mrun);
 #endif
 			tsm = time(NULL);
 		}
@@ -840,6 +848,7 @@ void *netproc(void *p){
 			rd.tempb = ch2;
 
 			ip->dq.push(rd);
+
 			rtd rd;
 			memset(&rd,0,sizeof(rtd));
 
