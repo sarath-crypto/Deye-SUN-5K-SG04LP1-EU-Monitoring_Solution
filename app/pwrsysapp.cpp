@@ -710,7 +710,8 @@ void *netproc(void *p){
 			if(phr == chr){
 				if(wfl <= wlo)mrun = true;
 				if(wfl >= whi)mrun = false;
-			}
+			}else mrun = false;
+			
 			if(mrun)m_msg += "ON";
 			else m_msg += "OFF";
 
